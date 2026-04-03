@@ -1,1 +1,269 @@
-<p>home works!</p>
+<div class="home-container">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <div class="logo">
+        <!-- LOGO -->
+        <img src="images/logo.png"
+             alt="TicketHub Logo"
+             class="logo-img"
+             onerror="this.style.display='none'">
+        <span>TicketHub</span>
+      </div>
+      <div class="nav-links">
+        <a href="#features">Características</a>
+        <a href="#team">Equipo</a>
+        <a href="#screenshots">Sistema</a>
+        <a href="#contact">Contacto</a>
+        <button class="btn-login" (click)="irALogin()">Iniciar Sesión</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section con imagen de fondo -->
+  <section class="hero" style="background-image: url('images/hero-bg.jpg')">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Gestión de Tickets
+        <span class="gradient-text">Inteligente y Simple</span>
+      </h1>
+      <p class="hero-description">
+        Centraliza, organiza y resuelve tus tickets de soporte de manera eficiente.
+        La solución perfecta para empresas, especialistas y administradores.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn-primary" (click)="irALogin()">
+          Comenzar Ahora
+          <i class="pi pi-arrow-right"></i>
+        </button>
+        <button class="btn-secondary" (click)="verDemo()">
+          Ver Demo
+          <i class="pi pi-play"></i>
+        </button>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="dashboard-preview">
+        <div class="preview-card">
+          <div class="preview-header">
+            <div class="preview-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span>Dashboard</span>
+          </div>
+          <div class="preview-stats">
+            <div class="stat"></div>
+            <div class="stat"></div>
+            <div class="stat"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <h2 class="section-title">¿Por qué elegirnos?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🚀</div>
+        <h3>Rápido y Eficiente</h3>
+        <p>Gestiona tus tickets en segundos con una interfaz intuitiva y responsive</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Seguro y Confiable</h3>
+        <p>Tus datos están protegidos con autenticación segura y encriptación</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Estadísticas en Tiempo Real</h3>
+        <p>Visualiza métricas y KPIs con gráficas interactivas y reportes</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>Múltiples Roles</h3>
+        <p>Empresas, especialistas y administradores con vistas personalizadas</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Responsive Design</h3>
+        <p>Accede desde cualquier dispositivo: desktop, tablet o móvil</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Sincronización en Vivo</h3>
+        <p>Actualizaciones en tiempo real de todos los tickets y cambios</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number">1000+</div>
+        <div class="stat-label">Tickets Resueltos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Satisfacción</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">Soporte</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Empresas</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots Section -->
+  <section id="screenshots" class="screenshots">
+    <h2 class="section-title">Conoce el Sistema</h2>
+    <p class="section-subtitle">Una interfaz moderna y fácil de usar para gestionar todos tus tickets</p>
+    <div class="screenshots-grid">
+      <div class="screenshot-card">
+        <img src="images/screenshots/dashboard.png"
+             alt="Dashboard principal"
+             onerror="this.src='https://placehold.co/600x400/667eea/white?text=Dashboard'">
+        <div class="screenshot-label">Dashboard Principal</div>
+      </div>
+      <div class="screenshot-card">
+        <img src="images/screenshots/tickets.png"
+             alt="Gestión de tickets"
+             onerror="this.src='https://placehold.co/600x400/764ba2/white?text=Tickets'">
+        <div class="screenshot-label">Gestión de Tickets</div>
+      </div>
+      <div class="screenshot-card">
+        <img src="images/screenshots/reportes.png"
+             alt="Reportes y estadísticas"
+             onerror="this.src='https://placehold.co/600x400/667eea/white?text=Reportes'">
+        <div class="screenshot-label">Reportes y Estadísticas</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="team">
+    <h2 class="section-title">Nuestro Equipo</h2>
+    <p class="section-subtitle">Profesionales comprometidos con brindarte el mejor soporte</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo-wrapper">
+          <img src="images/team/team-1.jpg"
+               alt="Miembro del equipo"
+               class="team-photo"
+               onerror="this.src='https://placehold.co/200x200/667eea/white?text=CEO'">
+        </div>
+        <h3>Carlos Ramírez</h3>
+        <p class="team-role">CEO & Fundador</p>
+        <p class="team-bio">15 años de experiencia en soluciones tecnológicas empresariales</p>
+      </div>
+      <div class="team-card">
+        <div class="team-photo-wrapper">
+          <img src="images/team/team-2.jpg"
+               alt="Miembro del equipo"
+               class="team-photo"
+               onerror="this.src='https://placehold.co/200x200/764ba2/white?text=CTO'">
+        </div>
+        <h3>María López</h3>
+        <p class="team-role">CTO</p>
+        <p class="team-bio">Especialista en arquitectura de software y sistemas escalables</p>
+      </div>
+      <div class="team-card">
+        <div class="team-photo-wrapper">
+          <img src="images/team/team-3.jpg"
+               alt="Miembro del equipo"
+               class="team-photo"
+               onerror="this.src='https://placehold.co/200x200/667eea/white?text=Soporte'">
+        </div>
+        <h3>Juan Torres</h3>
+        <p class="team-role">Líder de Soporte</p>
+        <p class="team-bio">Garantiza que cada ticket sea resuelto con calidad y rapidez</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roles Section -->
+  <section class="roles">
+    <h2 class="section-title">Diseñado para cada rol</h2>
+    <div class="roles-grid">
+      <div class="role-card">
+        <div class="role-icon">🏢</div>
+        <h3>Empresas</h3>
+        <p>Gestiona tus tickets, visualiza el progreso y comunícate con especialistas</p>
+        <ul>
+          <li>✓ Crear tickets</li>
+          <li>✓ Seguimiento en tiempo real</li>
+          <li>✓ Historial completo</li>
+        </ul>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">👨‍💻</div>
+        <h3>Especialistas</h3>
+        <p>Asigna, resuelve y da seguimiento a los tickets asignados a tu equipo</p>
+        <ul>
+          <li>✓ Bandeja de tickets</li>
+          <li>✓ Actualizar estados</li>
+          <li>✓ Comunicación directa</li>
+        </ul>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">👑</div>
+        <h3>Administradores</h3>
+        <p>Control total del sistema, usuarios y estadísticas globales</p>
+        <ul>
+          <li>✓ Gestión de usuarios</li>
+          <li>✓ Reportes globales</li>
+          <li>✓ Configuración del sistema</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="cta-content">
+      <h2>¿Listo para optimizar tu soporte?</h2>
+      <p>Únete a cientos de empresas que ya confían en TicketHub</p>
+      <button class="btn-primary btn-large" (click)="irALogin()">
+        Comenzar Gratis
+        <i class="pi pi-arrow-right"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="footer-logo">
+          <img src="images/logo.png" alt="TicketHub"
+               onerror="this.style.display='none'">
+          <h4>TicketHub</h4>
+        </div>
+        <p>Sistema de gestión de tickets moderno y eficiente</p>
+      </div>
+      <div class="footer-section">
+        <h4>Enlaces Rápidos</h4>
+        <a href="#features">Características</a>
+        <a href="#team">Equipo</a>
+        <a href="#screenshots">Sistema</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contacto</h4>
+        <p>📧 soporte&#64;tickethub.com</p>
+        <p>📞 +56 2 1234 5678</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 TicketHub. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+</div>
