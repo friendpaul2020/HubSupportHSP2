@@ -2,7 +2,10 @@ import { Routes } from '@angular/router';
 import { authGuard } from '../app/guards/auth-guard';
 import { LoginComponent } from '../app/pages/login/login';
 
+import { HomeComponent } from '../app/pages/home/home';
+
 export const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'empresa',

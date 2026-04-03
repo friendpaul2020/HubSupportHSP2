@@ -1,1 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
+/* Importar PrimeIcons*/
+@import 'primeicons/primeicons.css';
+@import 'tailwindcss';
+
+@import 'primeicons/primeicons.css';
+
+/* Importar TailwindCSS 4*/
+@import 'tailwindcss';
+
+/* Configuración de PrimeNG*/
+@layer tailwind, primeng;
+
+@layer tailwind {
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+}
+
+/* Estilos globales*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--p-surface-50);
+}
+
+/* Ajustes para PrimeNG con Tailwind*/
+.p-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
