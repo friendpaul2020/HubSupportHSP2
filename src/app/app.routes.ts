@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '../app/guards/auth-guard';
 import { LoginComponent } from '../app/pages/login/login';
+import { NgModule } from '@angular/core';
 
 import { HomeComponent } from '../app/pages/home/home';
-
+import { PaymentPageComponent } from './payment/pages/payment-page/payment-page.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+  //{ path: '', component: PaymentPageComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'empresa',

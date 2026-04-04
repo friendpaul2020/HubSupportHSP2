@@ -1,0 +1,199 @@
+<div class="history-container">
+    <!-- Header -->
+    <div class="history-header">
+      <h1>📋 Historial de Tickets y Pagos</h1>
+      <div class="header-actions">
+        <button class="btn-refresh" (click)="refreshData()">🔄 Actualizar</button>
+        <button class="btn-new" (click)="createNewTicket()">+ Nuevo Ticket</button>
+      </div>
+    </div>
+
+    <!-- Formulario de email (sin sesión) -->
+    <div class="email-form" *ngIf="!userEmail && !isLoading">
+      <div class="email-card">
+        <h2>🔐 Ingresa tu email</h2>
+        <p>Para ver el historial de tus tickets y pagos</p>
+        <input
+          type="email"
+          [(ngModel)]="userEmail"
+          placeholder="tu@email.com"
+          class="email-input"
+          (keyup.enter)="setUserEmail()"
+        >
+        <button (click)="setUserEmail()" class="btn-submit">Ver mis tickets</button>
+      </div>
+    </div>
+
+    <!-- Dashboard de estadísticas -->
+    <div class="stats-dashboard" *ngIf="tickets.length > 0">
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-value">{{ totalTicketsCount }}</div>
+        <div class="stat-label">Total Tickets</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🔄</div>
+        <div class="stat-value">{{ activeTicketsCount }}</div>
+        <div class="stat-label">Tickets Activos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value">{{ resolvedTicketsCount }}</div>
+        <div class="stat-label">Resueltos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value">{{ formatCurrency(totalSpent) }}</div>
+        <div class="stat-label">Total Gastado</div>
+      </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters-panel" *ngIf="tickets.length > 0">
+      <div class="filters-header">
+        <h3>🔍 Filtros</h3>
+        <button class="btn-clear" (click)="clearFilters()">Limpiar filtros</button>
+      </div>
+
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label>Estado:</label>
+          <select [(ngModel)]="selectedStatus" (change)="onStatusChange()">
+            <option value="todos">Todos</option>
+            <option value="abierto">Abierto</option>
+            <option value="en_proceso">En Proceso</option>
+            <option value="pagado">Pagado</option>
+            <option value="resuelto">Resuelto</option>
+            <option value="cerrado">Cerrado</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Prioridad:</label>
+          <select [(ngModel)]="selectedPriority" (change)="onPriorityChange()">
+            <option value="todos">Todas</option>
+            <option value="alta">🔴 Alta</option>
+            <option value="media">🟡 Media</option>
+            <option value="baja">🟢 Baja</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Categoría:</label>
+          <select [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+            <option value="todos">Todas</option>
+            <option value="tecnico">🔧 Soporte Técnico</option>
+            <option value="soporte">💬 Soporte General</option>
+            <option value="facturacion">💰 Facturación</option>
+            <option value="general">📋 General</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>Buscar:</label>
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (input)="onSearch()"
+            placeholder="ID, asunto o descripción..."
+            class="search-input"
+          >
+        </div>
+
+        <div class="filter-group">
+          <label>Fecha desde:</label>
+          <input type="date" [(ngModel)]="dateFrom" (change)="onDateChange()">
+        </div>
+
+        <div class="filter-group">
+          <label>Fecha hasta:</label>
+          <input type="date" [(ngModel)]="dateTo" (change)="onDateChange()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de tickets -->
+    <div class="tickets-list" *ngIf="!isLoading && filteredTickets.length > 0">
+      <div class="tickets-header">
+        <span>Mostrando {{ getPaginatedTickets().length }} de {{ filteredTickets.length }} tickets</span>
+      </div>
+
+      <div *ngFor="let ticket of getPaginatedTickets()" class="ticket-card" (click)="viewTicketDetail(ticket)">
+        <div class="ticket-header">
+          <div class="ticket-id">
+            <span class="category-icon">{{ getCategoryIcon(ticket.category) }}</span>
+            {{ ticket.ticketId }}
+          </div>
+          <div class="ticket-status">
+            <span class="badge {{ getStatusBadgeClass(ticket.status) }}">
+              {{ getStatusText(ticket.status) }}
+            </span>
+          </div>
+        </div>
+
+        <div class="ticket-subject">{{ ticket.subject }}</div>
+        <div class="ticket-description">{{ ticket.description | slice:0:100 }}{{ ticket.description.length > 100 ? '...' : '' }}</div>
+
+        <div class="ticket-footer">
+          <div class="ticket-date">📅 {{ formatDate(ticket.createdAt) }}</div>
+          <div class="ticket-priority">
+            <span class="priority {{ getPriorityClass(ticket.priority) }}">
+              {{ ticket.priority | uppercase }}
+            </span>
+          </div>
+        </div>
+
+        <div class="ticket-payment" *ngIf="ticket.paymentInfo">
+          <span>💰 {{ formatCurrency(ticket.paymentInfo.amount) }}</span>
+          <span class="payment-id">ID: {{ ticket.paymentInfo.paymentIntentId | slice:0:8 }}...</span>
+        </div>
+      </div>
+
+      <!-- Paginación -->
+      <div class="pagination" *ngIf="totalPages > 1">
+        <button class="page-btn" (click)="previousPage()" [disabled]="currentPage === 1">
+          Anterior
+        </button>
+
+        <div class="page-numbers">
+          <button
+            *ngFor="let page of getPages()"
+            class="page-num"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)"
+          >
+            {{ page }}
+          </button>
+        </div>
+
+        <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">
+          Siguiente
+        </button>
+      </div>
+    </div>
+
+    <!-- Sin resultados -->
+    <div class="no-results" *ngIf="!isLoading && userEmail && filteredTickets.length === 0 && tickets.length > 0">
+      <div class="no-results-icon">🔍</div>
+      <p>No se encontraron tickets con los filtros seleccionados</p>
+      <button class="btn-clear-filters" (click)="clearFilters()">Limpiar filtros</button>
+    </div>
+
+    <!-- Sin tickets -->
+    <div class="no-tickets" *ngIf="!isLoading && userEmail && tickets.length === 0">
+      <div class="no-tickets-icon">🎫</div>
+      <p>No tienes tickets aún</p>
+      <button class="btn-create" routerLink="/payment">Crear mi primer ticket</button>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Cargando tus tickets...</p>
+    </div>
+
+    <!-- Botón logout -->
+    <div class="logout-container" *ngIf="userEmail && tickets.length > 0">
+      <button class="btn-logout" (click)="logout()">Cerrar sesión</button>
+    </div>
+  </div>
