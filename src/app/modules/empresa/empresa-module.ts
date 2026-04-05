@@ -1,10 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import { EmpresaRoutingModule } from './empresa-routing-module';
+import { TicketDashboardComponent } from './tickets/components/ticket-dashboard/ticket-dashboard.component';
+import { TicketFormComponent } from './tickets/components/ticket-form/ticket-form.component';
+import { TicketListComponent } from './tickets/components/ticket-list/ticket-list.component';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, EmpresaRoutingModule],
+  declarations: [],       // ← vacío
+  imports: [
+    CommonModule,
+    FormsModule,
+    TicketDashboardComponent,  // ← aquí
+    TicketFormComponent,
+    TicketListComponent
+  ],
+  exports: [
+    TicketDashboardComponent,  // ← se pueden exportar desde imports
+    TicketFormComponent,
+    TicketListComponent
+  ]
 })
-export class EmpresaModule {}
+export class TicketsModule { }

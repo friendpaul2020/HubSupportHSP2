@@ -1,0 +1,136 @@
+<div class="ticket-list-container">
+  <div class="list-header">
+    <h3>📋 Mis Tickets</h3>
+    <div class="stats-resumen" *ngIf="!cargando">
+      <span class="badge">Total: {{ ticketsFiltrados.length }}</span>
+      <span class="badge abiertos">Abiertos: {{ tickets.filter(t => t.estado === 'Abierto').length }}</span>
+      <span class="badge proceso">En proceso: {{ tickets.filter(t => t.estado === 'En proceso').length }}</span>
+      <span class="badge cerrados">Cerrados: {{ tickets.filter(t => t.estado === 'Cerrado').length }}</span>
+    </div>
+  </div>
+
+  <!-- Barra de filtros -->
+  <div class="filtros-bar">
+    <div class="filtros-group">
+      <input
+        type="text"
+        [(ngModel)]="busquedaTexto"
+        (ngModelChange)="onBusquedaCambiar()"
+        placeholder="🔍 Buscar por título o descripción..."
+        class="search-input">
+
+      <select [(ngModel)]="filtroEstado" (ngModelChange)="onFiltroCambiar()" class="filtro-select">
+        <option value="todos">📊 Todos los estados</option>
+        <option value="Abierto">🟢 Abiertos</option>
+        <option value="En proceso">🟡 En proceso</option>
+        <option value="Cerrado">✅ Cerrados</option>
+      </select>
+
+      <select [(ngModel)]="filtroPrioridad" (ngModelChange)="onFiltroCambiar()" class="filtro-select">
+        <option value="todos">🎯 Todas las prioridades</option>
+        <option value="Alta">🔴 Alta</option>
+        <option value="Media">🟡 Media</option>
+        <option value="Baja">🟢 Baja</option>
+      </select>
+    </div>
+
+    <button class="btn-refresh" (click)="cargarTickets()" title="Recargar">
+      🔄
+    </button>
+  </div>
+
+  <!-- Estado de carga -->
+  <div *ngIf="cargando" class="loading-state">
+    <div class="spinner"></div>
+    <p>Cargando tickets...</p>
+  </div>
+
+  <!-- Sin resultados -->
+  <div *ngIf="!cargando && ticketsFiltrados.length === 0" class="empty-state">
+    <div class="empty-icon">📭</div>
+    <h4>No hay tickets</h4>
+    <p>No se encontraron tickets con los filtros seleccionados.</p>
+    <button class="btn-clear-filtros" (click)="filtroEstado='todos'; filtroPrioridad='todos'; busquedaTexto=''; aplicarFiltros()">
+      Limpiar filtros
+    </button>
+  </div>
+
+  <!-- Lista de tickets -->
+  <div *ngIf="!cargando && ticketsFiltrados.length > 0" class="tickets-grid">
+    <div *ngFor="let ticket of ticketsPaginados" class="ticket-card" [class]="getPrioridadClass(ticket.prioridad)">
+      <div class="ticket-header">
+        <div class="ticket-titulo">
+          <span class="prioridad-icon">{{ getPrioridadIcono(ticket.prioridad) }}</span>
+          <h4>{{ ticket.titulo }}</h4>
+        </div>
+        <div class="ticket-acciones">
+          <select
+            [value]="ticket.estado"
+            (change)="cambiarEstado(ticket, $any($event.target).value)"
+            class="estado-select"
+            [class]="getEstadoClass(ticket.estado)">
+            <option value="Abierto">🟢 Abierto</option>
+            <option value="En proceso">🟡 En proceso</option>
+            <option value="Cerrado">✅ Cerrado</option>
+          </select>
+          <button class="btn-delete" (click)="eliminarTicket(ticket.id!, ticket.titulo)" title="Eliminar">
+            🗑️
+          </button>
+        </div>
+      </div>
+
+      <div class="ticket-body">
+        <p class="descripcion">{{ ticket.descripcion }}</p>
+        <div class="ticket-meta">
+          <span class="meta-item">
+            <span class="meta-label">Prioridad:</span>
+            <span class="meta-value" [class]="getPrioridadClass(ticket.prioridad)">
+              {{ ticket.prioridad }}
+            </span>
+          </span>
+          <span class="meta-item">
+            <span class="meta-label">Estado:</span>
+            <span class="meta-value" [class]="getEstadoClass(ticket.estado)">
+              {{ ticket.estado }}
+            </span>
+          </span>
+          <span class="meta-item">
+            <span class="meta-label">Creado:</span>
+            <span class="meta-value">{{ formatearFecha(ticket.fechaCreacion) }}</span>
+          </span>
+          <span class="meta-item" *ngIf="ticket.creadoPorNombre">
+            <span class="meta-label">Por:</span>
+            <span class="meta-value">{{ ticket.creadoPorNombre }}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paginación -->
+  <div *ngIf="!cargando && ticketsFiltrados.length > 0" class="pagination">
+    <button
+      class="page-btn"
+      (click)="cambiarPagina(paginaActual - 1)"
+      [disabled]="paginaActual === 1">
+      ← Anterior
+    </button>
+
+    <div class="page-numbers">
+      <button
+        *ngFor="let pagina of [].constructor(totalPaginas); let i = index"
+        class="page-num"
+        [class.active]="paginaActual === i + 1"
+        (click)="cambiarPagina(i + 1)">
+        {{ i + 1 }}
+      </button>
+    </div>
+
+    <button
+      class="page-btn"
+      (click)="cambiarPagina(paginaActual + 1)"
+      [disabled]="paginaActual === totalPaginas">
+      Siguiente →
+    </button>
+  </div>
+</div>

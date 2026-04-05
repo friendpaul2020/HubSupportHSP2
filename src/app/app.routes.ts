@@ -11,9 +11,10 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'empresa',
-    loadChildren: () => import('../app/modules/empresa/empresa-module').then(m => m.EmpresaModule),
-    canActivate: [authGuard],
-    data: { role: 'empresa' }
+    loadChildren: () =>
+    import('../app/modules/empresa/empresa-routing-module').then(m => m.EmpresaRoutingModule),
+  canActivate: [authGuard],
+  data: { role: 'empresa' }
   },
   {
     path: 'especialistas',

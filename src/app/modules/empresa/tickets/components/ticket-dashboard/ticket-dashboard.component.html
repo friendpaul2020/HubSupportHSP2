@@ -1,0 +1,78 @@
+<div class="ticket-dashboard">
+  <div class="dashboard-header">
+    <h2>🎫 Dashboard de Tickets</h2>
+    <div class="empresa-info" *ngIf="empresaActual">
+      <span class="badge">🏢 {{ empresaActual.nombre }}</span>
+    </div>
+  </div>
+
+  <div *ngIf="cargando" class="loading">
+    Cargando estadísticas...
+  </div>
+
+  <div *ngIf="!cargando" class="stats-container">
+    <div class="stats-grid">
+      <div class="stat-card total">
+        <div class="stat-icon">📊</div>
+        <div class="stat-info">
+          <h3>Total Tickets</h3>
+          <p class="stat-number">{{ stats.total }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card abiertos">
+        <div class="stat-icon">🟢</div>
+        <div class="stat-info">
+          <h3>Abiertos</h3>
+          <p class="stat-number">{{ stats.abiertos }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card proceso">
+        <div class="stat-icon">🟡</div>
+        <div class="stat-info">
+          <h3>En Proceso</h3>
+          <p class="stat-number">{{ stats.enProceso }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card cerrados">
+        <div class="stat-icon">✅</div>
+        <div class="stat-info">
+          <h3>Cerrados</h3>
+          <p class="stat-number">{{ stats.cerrados }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="prioridad-section">
+      <h3>Prioridades</h3>
+      <div class="prioridad-bars">
+        <div class="prioridad-item">
+          <span class="label">Alta</span>
+          <div class="bar-container">
+            <div class="bar alta" [style.width.%]="(stats.porPrioridad.alta / stats.total) * 100">
+              {{ stats.porPrioridad.alta }}
+            </div>
+          </div>
+        </div>
+        <div class="prioridad-item">
+          <span class="label">Media</span>
+          <div class="bar-container">
+            <div class="bar media" [style.width.%]="(stats.porPrioridad.media / stats.total) * 100">
+              {{ stats.porPrioridad.media }}
+            </div>
+          </div>
+        </div>
+        <div class="prioridad-item">
+          <span class="label">Baja</span>
+          <div class="bar-container">
+            <div class="bar baja" [style.width.%]="(stats.porPrioridad.baja / stats.total) * 100">
+              {{ stats.porPrioridad.baja }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

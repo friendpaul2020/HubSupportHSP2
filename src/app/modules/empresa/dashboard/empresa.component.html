@@ -1,0 +1,27 @@
+<div class="empresa-dashboard">
+  <div class="header">
+    <h1>Bienvenido {{ empresa?.nombre }}</h1>
+    <p>Panel de control de tu empresa</p>
+  </div>
+
+  <div class="tickets-section">
+    <p-tabs value="0">
+      <p-tablist>
+        <p-tab value="0">📊 Dashboard Tickets</p-tab>
+        <p-tab value="1">➕ Nuevo Ticket</p-tab>
+        <p-tab value="2">📋 Mis Tickets</p-tab>
+      </p-tablist>
+      <p-tabpanels>
+        <p-tabpanel value="0">
+          <app-ticket-dashboard></app-ticket-dashboard>
+        </p-tabpanel>
+        <p-tabpanel value="1">
+          <app-ticket-form (ticketCreado)="onTicketCreado()"></app-ticket-form>
+        </p-tabpanel>
+        <p-tabpanel value="2">
+          <app-ticket-list></app-ticket-list>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </div>
+</div>

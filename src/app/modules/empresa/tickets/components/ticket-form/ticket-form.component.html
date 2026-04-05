@@ -1,0 +1,45 @@
+<div class="ticket-form-container">
+  <h3>📝 Registrar Nuevo Ticket</h3>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="titulo">Título *</label>
+      <input
+        type="text"
+        id="titulo"
+        [(ngModel)]="ticket.titulo"
+        name="titulo"
+        required
+        placeholder="Ej: Error en el sistema de facturación">
+    </div>
+
+    <div class="form-group">
+      <label for="descripcion">Descripción *</label>
+      <textarea
+        id="descripcion"
+        [(ngModel)]="ticket.descripcion"
+        name="descripcion"
+        rows="5"
+        required
+        placeholder="Describe el problema o solicitud en detalle..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="prioridad">Prioridad</label>
+      <select id="prioridad" [(ngModel)]="ticket.prioridad" name="prioridad">
+        <option value="Baja">🟢 Baja</option>
+        <option value="Media">🟡 Media</option>
+        <option value="Alta">🔴 Alta</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit">
+        ➕ Registrar Ticket
+      </button>
+      <button type="button" class="btn-clear" (click)="resetForm()">
+        🧹 Limpiar
+      </button>
+    </div>
+  </form>
+</div>
